@@ -57,7 +57,7 @@ const ConfirmEmailForm = ({ history, match }) => {
           type="email"
           defaultValue={match.params.email || ""}
           required
-          onChange={() => onConfirmationEmailChange()}
+          onChange={(e) => onConfirmationEmailChange(e)}
         />
         <h3 className="form-text">Confirmation Code</h3>
         <input
@@ -65,7 +65,7 @@ const ConfirmEmailForm = ({ history, match }) => {
           id="confirmationCode"
           type="text"
           required
-          onChange={() => onConfirmationCodeChange()}
+          onChange={(e) => onConfirmationCodeChange(e)}
         />
         <div className="form-center">
           {signUpConfirmationText}
