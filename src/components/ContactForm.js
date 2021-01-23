@@ -9,19 +9,6 @@ const ContactForm = () => {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
 
-  const onNameChange = (event) => {
-    setName(event.target.value);
-  };
-  const onEmailChange = (event) => {
-    setEmail(event.target.email);
-  };
-  const onSubjectChange = (event) => {
-    setSubject(event.target.subject);
-  };
-  const onMsgChange = (event) => {
-    setMessage(event.target.message);
-  };
-
   const submitEmail = (e) => {
     e.preventDefault();
     setStatus("sending");
@@ -49,6 +36,10 @@ const ContactForm = () => {
         } else {
           setStatus("fail");
         }
+      })
+      .catch((error) => {
+        console.error(error);
+        setStatus("fail");
       });
   };
 
@@ -89,8 +80,7 @@ const ContactForm = () => {
               type="text"
               required
               value={name}
-              defaultValue={""}
-              onChange={onNameChange}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="contact-input-item">
@@ -100,8 +90,7 @@ const ContactForm = () => {
               type="email"
               required
               value={email}
-              defaultValue={""}
-              onChange={onEmailChange}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
         </ul>
@@ -113,8 +102,7 @@ const ContactForm = () => {
               type="text"
               required
               value={subject}
-              defaultValue={""}
-              onChange={onSubjectChange}
+              onChange={(e) => setSubject(e.target.value)}
             />
           </div>
         </ul>
@@ -126,8 +114,7 @@ const ContactForm = () => {
               rows="6"
               required
               value={message}
-              defaultValue={""}
-              onChange={onMsgChange}
+              onChange={(e) => setMessage(e.target.value)}
             />
           </div>
         </ul>
