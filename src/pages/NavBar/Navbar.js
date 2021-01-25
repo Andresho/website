@@ -8,7 +8,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 import { Auth } from "aws-amplify";
 
-function Navbar({ checkAuth, admin, authenticated, gatherer }) {
+function Navbar({ checkAuth, admin, isAuthenticated, gatherer }) {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -71,7 +71,7 @@ function Navbar({ checkAuth, admin, authenticated, gatherer }) {
                   Contact
                 </Link>
               </li>
-              {authenticated ? (
+              {isAuthenticated ? (
                 <>
                   {gatherer && (
                     <li className="nav-btn">
