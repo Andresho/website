@@ -33,50 +33,17 @@ type User
     @auth(
       rules: [{ allow: owner, ownerField: "id", operations: [update, read] }]
     )
-  trust: Float
-    @auth(rules: [{ allow: owner, ownerField: "id", operations: [read] }])
-  balance: Float
-    @auth(rules: [{ allow: owner, ownerField: "id", operations: [read] }])
-  pools: [PoolUser] @connection(keyName: "byUser", fields: ["id"])
+
   createdOn: AWSDateTime
   updatedOn: AWSDateTime
 }
 
-type PoolUser
-  @model(queries: null, subscriptions: null)
-  @auth(
-    rules: [
-      { allow: owner, ownerField: "userID", operations: [read, update, delete] }
-      { allow: private, operations: [create] }
-    ]
-  )
-  @key(name: "byPool", fields: ["poolID", "userID"])
-  @key(name: "byUser", fields: ["userID", "poolID"]) {
-  id: ID!
-  poolID: ID!
-  userID: ID!
-  pool: Pool! @connection(fields: ["poolID"])
-  user: User! @connection(fields: ["userID"])
+enum ExperimentStatus {
+  OPEN
+  ClOSED
 }
 
-type DataType
-  @model
-  @auth(
-    rules: [
-      { allow: groups, groups: ["admin"], operations: [create, update] }
-      { allow: private, operations: [read] }
-    ]
-  ) {
-  id: ID!
-  data: String!
-}
-
-enum CatagoryStatus {
-  UNPUBLISHED
-  PUBLISHED
-}
-
-type Catagory
+type Experiment
   @key(name: "catagorysByStatus", fields: ["status", "title"])
   @model(timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" })
   @auth(
@@ -87,65 +54,32 @@ type Catagory
   ) {
   id: ID!
   title: String!
-  catagory: String!
-
-  xtypeID: ID!
-  xtype: DataType @connection(fields: ["xtypeID"])
-
-  ytypeID: ID!
-  ytype: DataType @connection(fields: ["ytypeID"])
-
-  status: CatagoryStatus!
-}
-
-enum PoolStatus {
-  UNPUBLISHED
-  ACTIVE
-  COMPLETED
+  poolID: ID!
+  pool: Pool @connection(fields: ["poolID"])!
+  status: ExperimentStatus!
 }
 
 type Pool
   #@key(name: "poolsById", fields: ["id"], queryField: "poolsById") #For connection to tables
-  @key(name: "poolssByOwner", fields: ["owner"], queryField: "poolssByOwner")
   @key(name: "byKey", fields: ["privateKey"], queryField: "byKey")
   @model(timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" })
   @auth(
     rules: [
       { allow: private, operations: [read] }
-      { allow: owner, ownerField: "owner", operations: [delete, update] }
-      { allow: groups, groups: ["gatherer"], operations: [create] }
+      { allow: groups, groups: ["admin"], operations: [create, update, delete] }
     ]
   ) {
   id: ID!
   title: String!
   description: String!
-  tnc: String!
-  image: S30Object
-  requiredtrust: Float!
-  status: PoolStatus!
-  catagoryID: ID!
-  catagory: Catagory @connection(fields: ["catagoryID"])
-  samples: [sample] @connection(keyName: "byPoolID", fields: ["id"])
-  users: [PoolUser] @connection(keyName: "byPool", fields: ["id"])
+  dataNames: [String]!
+  dataTypes: [dataTypes]!
   createdAt: AWSDateTime
-  updatedAt: AWSDateTime
-  owner: String
-  privateKey: String
-    @auth(
-      rules: [
-        {
-          allow: owner
-          ownerField: "owner"
-          operations: [read, update, create]
-        }
-      ]
-    )
 }
 
-type S30Object {
-  bucket: String!
-  region: String!
-  key: String!
+enum dataTypes {
+  TEXT
+  IMAGE
 }
 
 type sample
@@ -158,18 +92,17 @@ type sample
   #@key(name: "byStatus", fields: ["labeledStatus", "modifiedAt"] queryField: "byStatus") #For the lambda cleaner cron job
   @model(
     timestamps: { createdAt: "createdAt" }
-    mutations: null
-    subscriptions: null
+    #mutations: null
+    #subscriptions: null
   )
   @auth(rules: [{ allow: private, operations: [read, update] }]) {
-  poolID: ID!
+  datasetID: ID!
   id: ID!
-  x: [String]!
-  y: [String]!
-  modifiedBy: String
+  data: [String]!
+  modifiedBy: [String]
   modifiedAt: AWSDateTime
-  labeledStatus: sampleStatus
   createdAt: AWSDateTime
+  labeledStatus: sampleStatus
 }
 
 enum sampleStatus {
