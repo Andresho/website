@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Navbar.css";
 
 import { MdFingerprint } from "react-icons/md";
@@ -8,12 +8,20 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 import { Auth } from "aws-amplify";
 
-function Navbar({ checkAuth, admin, isAuthenticated, gatherer }) {
+function Navbar({
+  isAuthenticated,
+  setIsAuthenticated,
+  checkAuth,
+  admin,
+  gatherer,
+}) {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+  const history = useHistory();
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -29,7 +37,11 @@ function Navbar({ checkAuth, admin, isAuthenticated, gatherer }) {
 
   const signOut = () => {
     Auth.signOut()
-      .then(() => checkAuth())
+      .then(() => {
+        setIsAuthenticated(false);
+        checkAuth();
+        history.replace("/");
+      })
       .catch((err) => console.log(err));
   };
 
