@@ -30,7 +30,7 @@ import ScrollToTop from "./components/ScrollToTop";
 Amplify.configure(aws_exports);
 
 const App = () => {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [admin, setAdmin] = useState();
   const [gatherer, setGatherer] = useState();
 
@@ -53,20 +53,21 @@ const App = () => {
           val.signInUserSession.accessToken.payload["cognito:groups"] ?? []
         ).includes("gatherer");
 
-        setAuthenticated(true);
+        setIsAuthenticated(true);
         setAdmin(a);
         setGatherer(g);
       })
       .catch((err) => {
         console.log(err);
-        setAuthenticated(true);
+        setIsAuthenticated(false);
       });
   };
 
   return (
     <Router>
       <Navbar
-        isAuthenticated={authenticated}
+        isAuthenticated={isAuthenticated}
+        setIsAuthenticated={setIsAuthenticated}
         checkAuth={checkAuth}
         gatherer={gatherer}
         admin={admin}
@@ -91,7 +92,7 @@ const App = () => {
           />
           <Route path="/reset-password" component={ResetPassword} />
           <Route path="/confirm-email/:email?" component={ConfirmEmail} />
-          {authenticated && (
+          {isAuthenticated && (
             <Route
               path="/get-started"
               component={() => <GettingStarted gatherer={gatherer} />}
