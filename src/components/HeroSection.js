@@ -1,11 +1,5 @@
 import React from "react";
 import "./HeroSection.css";
-import { Button } from "./Button";
-import { Link } from "react-router-dom";
-import Mailchimp from "./MailChimpForm";
-
-const url =
-  "https://app.us2.list-manage.com/subscribe/post?u=3506547c6e30cd64bcab8beaf&id=d46611af2d";
 
 function HeroSection({
   lightBg,
@@ -14,8 +8,6 @@ function HeroSection({
   lightTextDesc,
   headline,
   description,
-  buttonLabel,
-  buttonLocation,
   img,
   alt,
   imgStart,
@@ -51,39 +43,6 @@ function HeroSection({
                 >
                   {description}
                 </p>
-                {form ? (
-                  <Mailchimp
-                    action={url}
-                    fields={[
-                      {
-                        name: "EMAIL",
-                        placeholder: "Your Email",
-                        type: "email",
-                        required: true,
-                      },
-                    ]}
-                  />
-                ) : (
-                  <Link to={buttonLocation}>
-                    {lightTextDesc ? (
-                      <Button
-                        buttonSize="btn--mobile"
-                        Color="#2d3436"
-                        Font="white"
-                      >
-                        {buttonLabel}
-                      </Button>
-                    ) : (
-                      <Button
-                        buttonSize="btn--wide"
-                        Color="#f1f3f6"
-                        Font="#252e48"
-                      >
-                        {buttonLabel}
-                      </Button>
-                    )}
-                  </Link>
-                )}
               </div>
             </div>
             <div className="col">
