@@ -137,11 +137,11 @@ export default class ChangeAppearance extends React.Component {
             </div>
           </div>
           <form onSubmit={this.onSubmit}>
-            <h3 className="form-label">Change pool appearance</h3>
+            <h3 className="form-label">Change experiment appearance</h3>
             <h3 className="form-text">
-              Pool name
+              experiment name
               <span className="form-span">
-                This will appear as the title of the pool
+                This will appear as the title of the experiment
               </span>
             </h3>
             <input
@@ -168,7 +168,8 @@ export default class ChangeAppearance extends React.Component {
             <h3 className="form-text">
               Enter Terms and conditions
               <span className="form-span">
-                Users will be made to accept before contributing to the pool
+                Users will be made to accept before contributing to the
+                experiment
               </span>
             </h3>
             <textarea

@@ -40,7 +40,7 @@ export const homeObjThree = {
   headline: "Get familiar with the software",
   description:
     "Thank you for getting in contact, we have given you permissions to access, create and manage pools",
-  buttonLabel: "Manage pools",
+  buttonLabel: "Manage experiments",
   buttonLocation: "manage-pools",
   imgStart: "start",
   img: "absurd/09.png",

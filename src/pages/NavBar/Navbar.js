@@ -94,7 +94,7 @@ function Navbar({
                             Font="white"
                             Glow="orange"
                           >
-                            Manage Pools
+                            Manage Experiments
                           </Button>
                         </Link>
                       ) : (
@@ -105,7 +105,7 @@ function Navbar({
                             buttonSize="btn--mobile"
                             onClick={closeMobileMenu}
                           >
-                            Manage Pools
+                            Manage Experiments
                           </Button>
                         </Link>
                       )}
