@@ -180,11 +180,11 @@ export default class ChangeAppearance extends React.Component {
       <div className="pool-page-content">
         <div className="auth-form-container">
           <form onSubmit={this.onSubmit}>
-            <h3 className="form-label">Manage access to your pool</h3>
+            <h3 className="form-label">Manage access to your experiment</h3>
             <h3 className="form-text">
               Private key
               <span className="form-span">
-                Use this key to manage the pool from the backend
+                Use this key to manage the experiment from the backend
               </span>
             </h3>
             <h2 className="contact-email-input">

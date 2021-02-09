@@ -94,7 +94,7 @@ function Navbar({
                             Font="white"
                             Glow="orange"
                           >
-                            Manage Experiments
+                            View Experiments
                           </Button>
                         </Link>
                       ) : (
