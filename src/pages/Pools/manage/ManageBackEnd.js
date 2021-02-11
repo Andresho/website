@@ -225,13 +225,7 @@ export default class ChangeAppearance extends React.Component {
               </span>
             </h3>
             <div className="form-bottom-content">
-              <input
-                type="range"
-                //onChange={this.onInitialSliderChange.bind(this)}
-                min="0"
-                max="1"
-                step="0.001"
-              />
+              <input type="range" min="0" max="1" step="0.001" />
               <h3 className="form-text">
                 Initial estimated cost per sample{" "}
                 <span style={{ color: "#6c63ff" }}>£0.0102</span>
