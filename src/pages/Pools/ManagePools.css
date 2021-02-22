@@ -110,6 +110,10 @@
   width: 200px;
 }
 
+.pool-side-nav button {
+  margin-left: 10px;
+}
+
 .pool-page-content {
   width: 200px;
   flex-grow: 1;
@@ -139,8 +143,27 @@
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.pool-side-nav-list {
-  margin-top: 30px;
+ul.pool-side-nav-list {
+  margin-bottom: 16px;
+  margin-top: 16px;
+  padding: 10px 12px;
+}
+
+ul.pool-side-nav-list li {
+  padding: 5px 3px;
+}
+
+ul.pool-side-nav-list li a {
+  color: #ee5a24;
+  text-decoration: none;
+}
+
+ul.pool-side-nav-list li a:hover {
+  color: #ccc;
+}
+
+.publish-button {
+  margin-top: 20px;
 }
 
 .pool-upload-image {

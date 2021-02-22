@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import "./ManagePools.css";
 import HeroSection from "../../components/HeroSection";
 import { homeObjOne } from "../NotFound/Data.js";
@@ -48,105 +48,98 @@ const getPool = /* GraphQL */ `
   }
 `;
 
-class ModifyPool extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: this.props.match.params.poolId || "",
-      fetch: false,
-      result: [],
-      image: "",
-      content: "backend",
-    };
-    this.GetPool = this.GetPool.bind(this);
-  }
+const ModifyPool = ({ match }) => {
+  const [fetch, setFetch] = useState(false);
+  const [result, setResult] = useState([]);
 
-  GetPool() {
-    const { id } = this.state;
+  useEffect(() => {
+    const id = match.params.poolId;
     API.graphql(graphqlOperation(getPool, { id: id }))
 
       .then((val) => {
         if (val.data.getPool !== null) {
-          this.setState({ result: val.data.getPool, fetch: true });
+          setResult(val.data.getPool);
+          setFetch(true);
         } else {
-          this.setState({ fetch: false });
+          setFetch(false);
         }
       })
       .catch((err) => {
         console.log(err);
-        this.setState({ fetch: false });
+        setFetch(false);
       });
+  }, [match]);
+
+  if (result === [] && fetch === true) {
+    return <></>;
+  } else if (fetch === false) {
+    return <HeroSection {...homeObjOne} />;
   }
 
-  componentDidMount() {
-    this.GetPool();
-  }
-
-  render() {
-    if (this.state.result === [] && this.state.fetch === true) {
-      return <></>;
-    } else if (this.state.fetch === false) {
-      return <HeroSection {...homeObjOne} />;
-    }
-    return (
-      <div className="pool-page-container">
-        <div className="pool-side-nav">
-          <div className="pool-side-nav-list">
-            <Link to={`${this.props.match.url}/appearance`}>Appearance</Link>
-            <hr className="pool-manage-menu-hr" />
-            <Link to={`${this.props.match.url}/backend`}>Back end</Link>
-            <hr className="pool-manage-menu-hr" />
-            <Link to={`${this.props.match.url}/statistics`}>Statistics</Link>
-            <hr className="pool-manage-menu-hr" />
-            <Link to={`${this.props.match.url}/billing`}>Billing</Link>
-            <hr className="pool-manage-menu-hr" />
-            <Link to={`${this.props.match.url}/export-data`}>Export Data</Link>
-            <hr className="pool-manage-menu-hr" />
-            <Button type="submit" buttonSize="btn--mobile" Glow="orange">
-              Publish
-            </Button>
-          </div>
-        </div>
-
-        <ScrollToTop>
-          <Switch>
-            <Route
-              exact
-              path={`${this.props.match.url}/appearance`}
-              component={() => <ChangeAppearance result={this.state.result} />}
-            />
-            <Route
-              exact
-              path={`${this.props.match.url}/backend`}
-              component={() => <ChangeBackEnd result={this.state.result} />}
-            />
-            <Route
-              exact
-              path={`${this.props.match.url}/statistics`}
-              component={() => <ChangeBackEnd result={this.state.result} />}
-            />
-            <Route
-              exact
-              path={`${this.props.match.url}/billing`}
-              component={() => <ChangeBackEnd result={this.state.result} />}
-            />
-            <Route
-              exact
-              path={`${this.props.match.url}/export-data`}
-              component={() => <ChangeBackEnd result={this.state.result} />}
-            />
-            <Route
-              exact
-              path={`${this.props.match.url}/test`}
-              component={() => <Test result={this.state.result} />}
-            />
-            <Route path="*" component={NotFound} />
-          </Switch>
-        </ScrollToTop>
+  console.log("match url: ", match);
+  return (
+    <div className="pool-page-container">
+      <div className="pool-side-nav">
+        <ul className="pool-side-nav-list">
+          <li>
+            <Link to={`${match.url}/appearance`}>Appearance</Link>
+          </li>
+          <li>
+            <Link to={`${match.url}/backend`}>Back end</Link>
+          </li>
+          <li>
+            <Link to={`${match.url}/statistics`}>Statistics</Link>
+          </li>
+          <li>
+            <Link to={`${match.url}/billing`}>Billing</Link>
+          </li>
+          <li>
+            <Link to={`${match.url}/export-data`}>Export Data</Link>
+          </li>
+        </ul>
+        <Button type="submit" buttonSize="btn--mobile" Glow="orange">
+          Publish
+        </Button>
       </div>
-    );
-  }
-}
+
+      <ScrollToTop>
+        <Switch>
+          <Route
+            exact
+            path={`${match.url}/appearance`}
+            component={() => <ChangeAppearance result={result} />}
+          />
+          <Route
+            exact
+            path={`${match.url}/backend`}
+            component={() => <ChangeBackEnd result={result} />}
+          />
+          <Route
+            exact
+            path={`${match.url}/statistics`}
+            component={() => <ChangeBackEnd result={result} />}
+          />
+          <Route
+            exact
+            path={`${match.url}/billing`}
+            component={() => <ChangeBackEnd result={result} />}
+          />
+          <Route
+            exact
+            path={`${match.url}/export-data`}
+            component={() => <ChangeBackEnd result={result} />}
+          />
+          <Route
+            exact
+            path={`${match.url}/test`}
+            component={() => <Test result={result} />}
+          />
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </ScrollToTop>
+    </div>
+  );
+};
 
 export default ModifyPool;
 
