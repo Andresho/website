@@ -133,7 +133,7 @@ const CreateForm = ({ history }) => {
         })
         .catch((err) => console.log(err));
     } else {
-      setStatus("Please select a category");
+      setStatus("Please select dataset");
     }
   };
 
@@ -193,7 +193,7 @@ const CreateForm = ({ history }) => {
           </span>
         </h3>
         <DropDown
-          title="Select Category"
+          title="Select Dataset"
           list={categoryTitles}
           output={(e) => setDropdown(e)}
         />

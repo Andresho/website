@@ -165,20 +165,6 @@ export default class ChangeAppearance extends React.Component {
               defaultValue={this.state.description}
               onChange={this.onDescriptionChange.bind(this)}
             />
-            <h3 className="form-text">
-              Enter Terms and conditions
-              <span className="form-span">
-                Users will be made to accept before contributing to the
-                experiment
-              </span>
-            </h3>
-            <textarea
-              className="contact-email-input tall-input"
-              rows="6"
-              required
-              defaultValue={this.state.tnc}
-              onChange={this.onTNCChange.bind(this)}
-            />
             <div className="form-bottom-content">
               {confirmation}
               <Button buttonSize="btn--form" Color="#f1f3f6" type="submit">
